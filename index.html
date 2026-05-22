@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>О компании — ПАО «Органический синтез»</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-bottom: 32px; }
+    @media(max-width:720px){ .about-grid { grid-template-columns: 1fr; } }
+    .timeline { border-left: 3px solid var(--accent); margin: 0 0 32px 12px; padding-left: 28px; }
+    .timeline-item { position: relative; margin-bottom: 28px; }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -37px; top: 4px;
+      width: 14px; height: 14px;
+      background: var(--accent);
+      border-radius: 50%;
+      border: 3px solid var(--bg);
+    }
+    .timeline-item .year {
+      font-family: 'Exo 2', sans-serif;
+      font-weight: 800;
+      color: var(--accent);
+      font-size: 1.05rem;
+      margin-bottom: 4px;
+    }
+    .timeline-item h4 { color: var(--primary); margin-bottom: 4px; }
+    .timeline-item p { color: var(--text-muted); font-size: 0.9rem; }
+
+    .product-pills { display: flex; flex-wrap: wrap; gap: 10px; margin: 16px 0; }
+    .pill {
+      background: rgba(26,61,107,0.08);
+      color: var(--primary);
+      border: 1px solid rgba(26,61,107,0.18);
+      border-radius: 20px;
+      padding: 5px 14px;
+      font-size: 0.84rem;
+      font-family: 'Exo 2', sans-serif;
+      font-weight: 600;
+    }
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-bottom: 32px;
+    }
+    @media(max-width:640px){ .photo-grid { grid-template-columns: 1fr 1fr; } }
+    .photo-item {
+      aspect-ratio: 4/3;
+      border-radius: 8px;
+      overflow: hidden;
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,0.7);
+      font-size: 2.5rem;
+      gap: 8px;
+    }
+    .photo-item span { font-size: 0.75rem; font-family: 'Exo 2', sans-serif; color: rgba(255,255,255,0.5); text-align: center; padding: 0 8px; }
+    .certif-row { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 16px; }
+    .certif-badge {
+      display: flex; align-items: center; gap: 8px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 16px;
+      font-size: 0.82rem;
+      color: var(--text);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .certif-badge .ico { font-size: 1.2rem; }
+  </style>
+</head>
+<body>
+
+
+<header class="top-bar">
+  <a href="index.html" class="logo-wrap">
+    <div class="logo-icon">ОС</div>
+    <div>
+      <div class="logo-text">Органический синтез</div>
+      <div class="logo-sub">Публичное акционерное общество</div>
+    </div>
+  </a>
+  <div class="spacer"></div>
+  <div class="ticker-badge">KZOS · МосБиржа</div>
+</header>
+
+
+<button class="hamburger-btn" onclick="toggleMenu()" aria-label="Открыть меню">
+  <span></span><span></span><span></span>
+</button>
+
+
+<div class="menu-overlay" onclick="toggleMenu()"></div>
+
+
+<aside class="side-menu">
+  <div class="side-menu-header">
+    <div class="sm-logo">ОС</div>
+    <span>Навигация</span>
+  </div>
+  <nav>
+    <a href="index.html" class="active"><span class="nav-icon">🏭</span>О компании</a>
+    <a href="news.html"><span class="nav-icon">📰</span>Новости</a>
+    <a href="currency.html"><span class="nav-icon">💱</span>Курс валют</a>
+    <a href="contacts.html"><span class="nav-icon">📍</span>Контакты</a>
+    <a href="video.html"><span class="nav-icon">🎥</span>Видео</a>
+  </nav>
+  <div class="side-menu-footer">ПАО «Органический синтез» © 2026</div>
+</aside>
+
+
+<section class="hero">
+  <div class="page-wrapper">
+    <div class="hero-label">Основан в 1963 году · Казань</div>
+    <h1>ПАО «Органический синтез»</h1>
+    <p>Один из крупнейших нефтехимических комплексов России — производство фенола, ацетона, полиэтилена и специальных химических продуктов для промышленности.</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><span class="val">60+</span><span class="lbl">лет на рынке</span></div>
+      <div class="hero-stat"><span class="val">5 000+</span><span class="lbl">сотрудников</span></div>
+      <div class="hero-stat"><span class="val">30+</span><span class="lbl">видов продукции</span></div>
+      <div class="hero-stat"><span class="val">40+</span><span class="lbl">стран-партнёров</span></div>
+    </div>
+  </div>
+</section>
+
+
+<main>
+  <div class="page-wrapper main-content">
+
+    
+    <div class="breadcrumb">
+      <a href="index.html">Главная</a>
+      <span class="sep">›</span>
+      <span>О компании</span>
+    </div>
+
+    
+    <div class="section-title"><h2>О компании</h2></div>
+
+    <div class="info-block">
+      <p>
+        <strong>ПАО «Органический синтез»</strong> — одно из ведущих нефтехимических предприятий Российской Федерации, расположенное в городе <strong>Казань</strong>, Республика Татарстан.
+        Компания входит в число крупнейших производителей органических химических веществ в России и обеспечивает сырьём и полуфабрикатами десятки отраслей промышленности: строительную,
+        автомобильную, лакокрасочную, фармацевтическую и многие другие.
+      </p>
+      <p>
+        Предприятие специализируется на производстве широкого спектра нефтехимической продукции: <strong>фенол</strong>, <strong>ацетон</strong>, <strong>полиэтилен низкой плотности</strong>,
+        изопропиловый спирт, окись пропилена, полиоксипропиленгликоли и поверхностно-активные вещества.
+        Продукция предприятия широко востребована как на внутреннем российском рынке, так и экспортируется в страны ближнего и дальнего зарубежья.
+      </p>
+      <p>
+        Акции компании торгуются на <strong>Московской бирже</strong> под тикером <strong>KZOS</strong>, что делает ПАО «Органический синтез» одним из немногих нефтехимических предприятий Поволжья с публичным
+        статусом. Государственным контрольным акционером выступает Республика Татарстан в лице профильных органов управления.
+      </p>
+    </div>
+
+    
+    <div class="section-title"><h2>Основная продукция</h2></div>
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon">🧪</div>
+        <h3>Фенол и ацетон</h3>
+        <p>Производство кумольным методом. Используются в синтезе смол, пластмасс, лекарственных препаратов и растворителей.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🏗️</div>
+        <h3>Полиэтилен низкой плотности</h3>
+        <p>ПЭНД и ПЭВД для производства упаковочных плёнок, труб, кабельной изоляции и строительных материалов.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">⚗️</div>
+        <h3>Изопропиловый спирт</h3>
+        <p>Высококачественный IPA для медицинской и фармацевтической промышленности, производства косметики и растворителей.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔬</div>
+        <h3>Окись пропилена и полиолы</h3>
+        <p>Сырьё для производства полиуретанов, пенопластов, поверхностно-активных веществ и специальных смазочных материалов.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🧴</div>
+        <h3>Поверхностно-активные вещества</h3>
+        <p>ПАВ для бытовой химии, моющих средств, нефтедобычи и сельскохозяйственных препаратов.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🏭</div>
+        <h3>Технические газы и растворители</h3>
+        <p>Ацетальдегид, ацетилен и другие продукты органического синтеза промышленного применения.</p>
+      </div>
+    </div>
+
+    
+    <div class="section-title"><h2>Фотогалерея</h2></div>
+    <div class="photo-grid">
+      <div class="photo-item">🏭<span>Производственный комплекс</span></div>
+      <div class="photo-item">⚗️<span>Химический реактор</span></div>
+      <div class="photo-item">🔬<span>Лаборатория контроля</span></div>
+      <div class="photo-item">🚛<span>Логистика и хранение</span></div>
+      <div class="photo-item">👷<span>Команда специалистов</span></div>
+      <div class="photo-item">🌿<span>Экология и безопасность</span></div>
+    </div>
+
+    
+    <div class="section-title"><h2>История предприятия</h2></div>
+    <div class="info-block">
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="year">1963</div>
+          <h4>Основание завода</h4>
+          <p>Введён в эксплуатацию Казанский завод органического синтеза как часть развития нефтехимического кластера Татарской АССР. Первое производство — ацетилен и продукты его переработки.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="year">1970-е</div>
+          <h4>Расширение производства</h4>
+          <p>Запуск производства фенола и ацетона кумольным методом. Завод становится основным поставщиком фенола для предприятий химической промышленности СССР.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="year">1980-е</div>
+          <h4>Полиэтиленовое направление</h4>
+          <p>Введены мощности по производству полиэтилена низкой плотности. Построены новые реакторные и компрессорные установки высокого давления.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="year">1993</div>
+          <h4>Акционирование</h4>
+          <p>В ходе приватизации завод преобразован в открытое акционерное общество. Контрольный пакет акций сохранён Республикой Татарстан.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="year">2000-е</div>
+          <h4>Модернизация и реконструкция</h4>
+          <p>Масштабная техническая модернизация производственных мощностей. Внедрение систем автоматизированного управления технологическими процессами (АСУ ТП).</p>
+        </div>
+        <div class="timeline-item">
+          <div class="year">2010-е</div>
+          <h4>Выход на биржу и развитие</h4>
+          <p>Акции компании включены в торговый листинг Московской биржи под тикером KZOS. Начало экспортных программ на рынки Европы и Азии.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="year">2020-е</div>
+          <h4>Экологические инвестиции</h4>
+          <p>Реализация инвестиционной программы по снижению экологической нагрузки. Строительство современных очистных сооружений и установок рекуперации паров.</p>
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="section-title"><h2>Ключевые факты</h2></div>
+    <div class="about-grid">
+      <div class="info-block" style="margin-bottom:0">
+        <h3>Производственные мощности</h3>
+        <table class="data-table" style="margin-top:16px;margin-bottom:0">
+          <tr><th>Продукт</th><th>Мощность</th></tr>
+          <tr><td>Фенол</td><td>240 000 т/год</td></tr>
+          <tr><td>Ацетон</td><td>140 000 т/год</td></tr>
+          <tr><td>Полиэтилен</td><td>210 000 т/год</td></tr>
+          <tr><td>Изопропанол</td><td>30 000 т/год</td></tr>
+          <tr><td>Окись пропилена</td><td>20 000 т/год</td></tr>
+        </table>
+      </div>
+      <div class="info-block" style="margin-bottom:0">
+        <h3>Финансовые показатели (2024)</h3>
+        <table class="data-table" style="margin-top:16px;margin-bottom:0">
+          <tr><th>Показатель</th><th>Значение</th></tr>
+          <tr><td>Выручка</td><td>≈ 30 млрд руб.</td></tr>
+          <tr><td>EBITDA</td><td>≈ 5,2 млрд руб.</td></tr>
+          <tr><td>Чистая прибыль</td><td>≈ 3,1 млрд руб.</td></tr>
+          <tr><td>Сотрудников</td><td>≈ 5 100 чел.</td></tr>
+          <tr><td>Тикер</td><td>KZOS (МосБиржа)</td></tr>
+        </table>
+      </div>
+    </div>
+
+    
+    <div class="highlight-box" style="margin-top:32px">
+      <h3>Сертификация и стандарты</h3>
+      <p>ПАО «Органический синтез» работает в соответствии с международными стандартами качества, экологической безопасности и охраны труда.</p>
+      <div class="certif-row">
+        <div class="certif-badge"><span class="ico">✅</span> ISO 9001:2015</div>
+        <div class="certif-badge"><span class="ico">🌿</span> ISO 14001:2015</div>
+        <div class="certif-badge"><span class="ico">🦺</span> ISO 45001:2018</div>
+        <div class="certif-badge"><span class="ico">⚗️</span> ГОСТ Р ИСО</div>
+        <div class="certif-badge"><span class="ico">🏆</span> Знак «Сделано в Татарстане»</div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>© 2026 ПАО «Органический синтез». Все права защищены.<br>ИНН 1660000666 · ОГРН 1021603469763</div>
+    <div><a href="contacts.html">г. Казань, ул. Беломорская, 101</a></div>
+  </div>
+</footer>
+
+
+<button class="back-to-top" aria-label="Наверх">↑</button>
+
+<script src="menu.js"></script>
+</body>
+</html>

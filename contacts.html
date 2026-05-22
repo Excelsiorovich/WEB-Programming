@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Контакты — ПАО «Органический синтез»</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .contacts-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      margin-bottom: 32px;
+    }
+    @media(max-width: 720px) { .contacts-grid { grid-template-columns: 1fr; } }
+
+    .contact-block {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      padding: 28px;
+    }
+    .contact-block h3 {
+      margin-bottom: 18px;
+      font-size: 1.05rem;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .contact-item {
+      display: flex;
+      gap: 14px;
+      margin-bottom: 16px;
+      align-items: flex-start;
+    }
+    .contact-item .ico {
+      width: 38px;
+      height: 38px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+    .contact-item .text { }
+    .contact-item .label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      font-family: 'Exo 2', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 2px;
+    }
+    .contact-item .val {
+      font-size: 0.95rem;
+      color: var(--text);
+      font-weight: 600;
+    }
+    .contact-item a { color: var(--primary-light); }
+    .contact-item a:hover { color: var(--accent); }
+
+    .map-container {
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      margin-bottom: 32px;
+    }
+    .map-container iframe {
+      width: 100%;
+      height: 420px;
+      display: block;
+      border: none;
+    }
+
+    .dept-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+      margin-bottom: 32px;
+    }
+    .dept-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      padding: 20px 22px;
+      box-shadow: 0 2px 10px rgba(26,61,107,0.07);
+    }
+    .dept-card .dept-name {
+      font-family: 'Exo 2', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--primary);
+      margin-bottom: 6px;
+    }
+    .dept-card .dept-contact { font-size: 0.85rem; color: var(--text-muted); }
+    .dept-card .dept-contact a { color: var(--primary-light); font-weight: 600; }
+  </style>
+</head>
+<body>
+
+<header class="top-bar">
+  <a href="index.html" class="logo-wrap">
+    <div class="logo-icon">ОС</div>
+    <div>
+      <div class="logo-text">Органический синтез</div>
+      <div class="logo-sub">Публичное акционерное общество</div>
+    </div>
+  </a>
+  <div class="spacer"></div>
+  <div class="ticker-badge">KZOS · МосБиржа</div>
+</header>
+
+<button class="hamburger-btn" onclick="toggleMenu()" aria-label="Открыть меню">
+  <span></span><span></span><span></span>
+</button>
+<div class="menu-overlay" onclick="toggleMenu()"></div>
+<aside class="side-menu">
+  <div class="side-menu-header"><div class="sm-logo">ОС</div><span>Навигация</span></div>
+  <nav>
+    <a href="index.html"><span class="nav-icon">🏭</span>О компании</a>
+    <a href="news.html"><span class="nav-icon">📰</span>Новости</a>
+    <a href="currency.html"><span class="nav-icon">💱</span>Курс валют</a>
+    <a href="contacts.html" class="active"><span class="nav-icon">📍</span>Контакты</a>
+    <a href="video.html"><span class="nav-icon">🎥</span>Видео</a>
+  </nav>
+  <div class="side-menu-footer">ПАО «Органический синтез» © 2026</div>
+</aside>
+
+<section class="hero" style="padding:40px 24px 36px">
+  <div class="page-wrapper">
+    <div class="hero-label">Реквизиты и адреса</div>
+    <h1>Контактные данные</h1>
+    <p>Офисы, телефоны, электронная почта и реквизиты ПАО «Органический синтез».</p>
+  </div>
+</section>
+
+<main>
+  <div class="page-wrapper main-content">
+    <div class="breadcrumb">
+      <a href="index.html">Главная</a><span class="sep">›</span><span>Контакты</span>
+    </div>
+
+    
+    <div class="contacts-grid">
+      <div class="contact-block">
+        <h3>📍 Головной офис</h3>
+
+        <div class="contact-item">
+          <div class="ico">🏛️</div>
+          <div class="text">
+            <div class="label">Юридический адрес</div>
+            <div class="val">420051, Республика Татарстан,<br>г. Казань, ул. Беломорская, д. 101</div>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="ico">📞</div>
+          <div class="text">
+            <div class="label">Приёмная</div>
+            <div class="val"><a href="tel:+78432760201">+7 (843) 276-02-01</a></div>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="ico">📠</div>
+          <div class="text">
+            <div class="label">Факс</div>
+            <div class="val">+7 (843) 276-02-02</div>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="ico">✉️</div>
+          <div class="text">
+            <div class="label">Общий e-mail</div>
+            <div class="val"><a href="mailto:info@ocsyn.ru">info@ocsyn.ru</a></div>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="ico">🌐</div>
+          <div class="text">
+            <div class="label">Веб-сайт</div>
+            <div class="val"><a href="https://www.ocsyn.ru" target="_blank">www.ocsyn.ru</a></div>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="ico">🕐</div>
+          <div class="text">
+            <div class="label">Режим работы</div>
+            <div class="val">Пн–Пт: 08:00–17:00<br>Перерыв: 12:00–13:00</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-block">
+        <h3>📄 Реквизиты</h3>
+
+        <div class="contact-item">
+          <div class="ico">🏢</div>
+          <div class="text">
+            <div class="label">Полное наименование</div>
+            <div class="val">Публичное акционерное общество «Органический синтез»</div>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="ico">🔢</div>
+          <div class="text">
+            <div class="label">ИНН / КПП</div>
+            <div class="val">1660000666 / 166001001</div>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="ico">📑</div>
+          <div class="text">
+            <div class="label">ОГРН</div>
+            <div class="val">1021603469763</div>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="ico">🏦</div>
+          <div class="text">
+            <div class="label">Расчётный счёт</div>
+            <div class="val">40702810500000012345<br>в ПАО «АК БАРС» Банк, г. Казань</div>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="ico">🔑</div>
+          <div class="text">
+            <div class="label">БИК / Корр. счёт</div>
+            <div class="val">049205805<br>30101810400000000805</div>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="ico">📊</div>
+          <div class="text">
+            <div class="label">Тикер акций</div>
+            <div class="val">KZOS (ПАО Московская биржа)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="section-title"><h2>Расположение на карте</h2></div>
+    <div class="map-container">
+      
+      <iframe
+        src="https://yandex.ru/map-widget/v1/?ll=49.131920%2C55.815020&z=15&pt=49.131920%2C55.815020,pm2rdm~&text=%D0%9A%D0%B0%D0%B7%D0%B0%D0%BD%D1%8C%2C%20%D1%83%D0%BB.%20%D0%91%D0%B5%D0%BB%D0%BE%D0%BC%D0%BE%D1%80%D1%81%D0%BA%D0%B0%D1%8F%2C%20101"
+        allowfullscreen
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+    </div>
+
+    
+    <div class="section-title"><h2>Контакты подразделений</h2></div>
+    <div class="dept-grid">
+      <div class="dept-card">
+        <div class="dept-name">Коммерческий отдел (сбыт)</div>
+        <div class="dept-contact">
+          📞 <a href="tel:+78432760210">+7 (843) 276-02-10</a><br>
+          ✉️ <a href="mailto:sales@ocsyn.ru">sales@ocsyn.ru</a>
+        </div>
+      </div>
+      <div class="dept-card">
+        <div class="dept-name">Отдел снабжения</div>
+        <div class="dept-contact">
+          📞 <a href="tel:+78432760220">+7 (843) 276-02-20</a><br>
+          ✉️ <a href="mailto:supply@ocsyn.ru">supply@ocsyn.ru</a>
+        </div>
+      </div>
+      <div class="dept-card">
+        <div class="dept-name">Финансово-экономический отдел</div>
+        <div class="dept-contact">
+          📞 <a href="tel:+78432760230">+7 (843) 276-02-30</a><br>
+          ✉️ <a href="mailto:finance@ocsyn.ru">finance@ocsyn.ru</a>
+        </div>
+      </div>
+      <div class="dept-card">
+        <div class="dept-name">Отдел кадров (HR)</div>
+        <div class="dept-contact">
+          📞 <a href="tel:+78432760240">+7 (843) 276-02-40</a><br>
+          ✉️ <a href="mailto:hr@ocsyn.ru">hr@ocsyn.ru</a>
+        </div>
+      </div>
+      <div class="dept-card">
+        <div class="dept-name">Техническая служба</div>
+        <div class="dept-contact">
+          📞 <a href="tel:+78432760250">+7 (843) 276-02-50</a><br>
+          ✉️ <a href="mailto:tech@ocsyn.ru">tech@ocsyn.ru</a>
+        </div>
+      </div>
+      <div class="dept-card">
+        <div class="dept-name">Пресс-служба / PR</div>
+        <div class="dept-contact">
+          📞 <a href="tel:+78432760260">+7 (843) 276-02-60</a><br>
+          ✉️ <a href="mailto:pr@ocsyn.ru">pr@ocsyn.ru</a>
+        </div>
+      </div>
+      <div class="dept-card">
+        <div class="dept-name">Служба безопасности</div>
+        <div class="dept-contact">
+          📞 <a href="tel:+78432760270">+7 (843) 276-02-70</a><br>
+          ✉️ <a href="mailto:security@ocsyn.ru">security@ocsyn.ru</a>
+        </div>
+      </div>
+      <div class="dept-card">
+        <div class="dept-name">Горячая линия (24/7)</div>
+        <div class="dept-contact">
+          📞 <a href="tel:+78001000666">8-800-100-06-66</a><br>
+          <span style="color:#1a9b3c;font-size:0.78rem">Звонок бесплатный</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>© 2026 ПАО «Органический синтез». Все права защищены.</div>
+    <div><a href="contacts.html">г. Казань, ул. Беломорская, 101</a></div>
+  </div>
+</footer>
+
+<button class="back-to-top" aria-label="Наверх">↑</button>
+<script src="menu.js"></script>
+</body>
+</html>

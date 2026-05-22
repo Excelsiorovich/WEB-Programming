@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Видео — ПАО «Органический синтез»</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .video-main {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      margin-bottom: 32px;
+    }
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      background: #000;
+    }
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: none;
+    }
+    .video-info {
+      padding: 24px 28px;
+    }
+    .video-info h3 { margin-bottom: 10px; }
+    .video-info p { color: var(--text-muted); font-size: 0.92rem; }
+
+    .more-videos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 22px;
+      margin-bottom: 32px;
+    }
+    .video-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+    }
+    .video-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 28px rgba(26,61,107,0.18);
+    }
+    .video-thumb {
+      position: relative;
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      padding-bottom: 56.25%;
+      overflow: hidden;
+    }
+    .video-thumb .play-btn {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 52px; height: 52px;
+      background: rgba(232,150,15,0.9);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem;
+      color: #fff;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .video-card:hover .play-btn { background: var(--accent); transform: translate(-50%, -50%) scale(1.12); }
+    .video-thumb .thumb-label {
+      position: absolute;
+      bottom: 10px; left: 12px;
+      background: rgba(0,0,0,0.6);
+      color: #fff;
+      font-size: 0.72rem;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-family: 'Exo 2', sans-serif;
+    }
+    .video-card-body { padding: 16px 18px; }
+    .video-card-body h4 { font-size: 0.92rem; margin-bottom: 5px; color: var(--primary); }
+    .video-card-body p { font-size: 0.82rem; color: var(--text-muted); }
+
+    .video-frame-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+    }
+    .video-frame-modal.open { display: flex; }
+    .modal-inner {
+      width: 90%;
+      max-width: 860px;
+      background: #000;
+      border-radius: 10px;
+      overflow: hidden;
+      position: relative;
+    }
+    .modal-close {
+      position: absolute;
+      top: 10px; right: 10px;
+      background: rgba(255,255,255,0.15);
+      border: none;
+      color: #fff;
+      font-size: 1.2rem;
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 10;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .modal-close:hover { background: rgba(255,255,255,0.3); }
+    .modal-video { position: relative; padding-bottom: 56.25%; height: 0; }
+    .modal-video iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+  </style>
+</head>
+<body>
+
+<header class="top-bar">
+  <a href="index.html" class="logo-wrap">
+    <div class="logo-icon">ОС</div>
+    <div>
+      <div class="logo-text">Органический синтез</div>
+      <div class="logo-sub">Публичное акционерное общество</div>
+    </div>
+  </a>
+  <div class="spacer"></div>
+  <div class="ticker-badge">KZOS · МосБиржа</div>
+</header>
+
+<button class="hamburger-btn" onclick="toggleMenu()" aria-label="Открыть меню">
+  <span></span><span></span><span></span>
+</button>
+<div class="menu-overlay" onclick="toggleMenu()"></div>
+<aside class="side-menu">
+  <div class="side-menu-header"><div class="sm-logo">ОС</div><span>Навигация</span></div>
+  <nav>
+    <a href="index.html"><span class="nav-icon">🏭</span>О компании</a>
+    <a href="news.html"><span class="nav-icon">📰</span>Новости</a>
+    <a href="currency.html"><span class="nav-icon">💱</span>Курс валют</a>
+    <a href="contacts.html"><span class="nav-icon">📍</span>Контакты</a>
+    <a href="video.html" class="active"><span class="nav-icon">🎥</span>Видео</a>
+  </nav>
+  <div class="side-menu-footer">ПАО «Органический синтез» © 2026</div>
+</aside>
+
+<section class="hero" style="padding:40px 24px 36px">
+  <div class="page-wrapper">
+    <div class="hero-label">Медиатека</div>
+    <h1>Видеоматериалы</h1>
+    <p>Видеоролики о производстве, истории и достижениях ПАО «Органический синтез».</p>
+  </div>
+</section>
+
+<main>
+  <div class="page-wrapper main-content">
+    <div class="breadcrumb">
+      <a href="index.html">Главная</a><span class="sep">›</span><span>Видео</span>
+    </div>
+
+    
+    <div class="section-title"><h2>Основное видео</h2></div>
+    <div class="video-main">
+      <div class="video-wrapper">
+        
+        <iframe
+          src="https://www.youtube.com/embed/pXGO5B-jFiQ"
+          title="Нефтехимический комплекс Татарстана"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen
+          loading="lazy">
+        </iframe>
+      </div>
+      <div class="video-info">
+        <h3>Нефтехимический комплекс Республики Татарстан</h3>
+        <p>Документальный фильм о нефтехимической промышленности Татарстана — ключевой отрасли региональной экономики. Видео рассказывает о предприятиях нефтехимического кластера Казани и Нижнекамска, роли Республики Татарстан в российской химической промышленности, технологиях органического синтеза и современных производствах.</p>
+      </div>
+    </div>
+
+    
+    <div class="section-title"><h2>Дополнительные материалы</h2></div>
+    <div class="more-videos-grid">
+      <div class="video-card" onclick="openModal('dQw4w9WgXcQ')">
+        <div class="video-thumb">
+          <div class="play-btn">▶</div>
+          <div class="thumb-label">🎬 Производство</div>
+        </div>
+        <div class="video-card-body">
+          <h4>Технология кумольного синтеза фенола и ацетона</h4>
+          <p>Наглядное описание промышленного процесса получения фенола и ацетона кумольным методом.</p>
+        </div>
+      </div>
+
+      <div class="video-card" onclick="openModal('9bZkp7q19f0')">
+        <div class="video-thumb">
+          <div class="play-btn">▶</div>
+          <div class="thumb-label">🔬 Лаборатория</div>
+        </div>
+        <div class="video-card-body">
+          <h4>Лабораторный контроль качества продукции</h4>
+          <p>Обзор заводской лаборатории: методы анализа, оборудование и стандарты контроля.</p>
+        </div>
+      </div>
+
+      <div class="video-card" onclick="openModal('jNQXAC9IVRw')">
+        <div class="video-thumb">
+          <div class="play-btn">▶</div>
+          <div class="thumb-label">🌿 Экология</div>
+        </div>
+        <div class="video-card-body">
+          <h4>Экологическая программа предприятия</h4>
+          <p>Репортаж о современных очистных сооружениях и экологических инициативах завода.</p>
+        </div>
+      </div>
+
+      <div class="video-card" onclick="openModal('L_LUpnjgPso')">
+        <div class="video-thumb">
+          <div class="play-btn">▶</div>
+          <div class="thumb-label">🏭 Производство</div>
+        </div>
+        <div class="video-card-body">
+          <h4>Производство полиэтилена высокого давления</h4>
+          <p>Экскурсия по установке ПЭВД: реакторы высокого давления, гранулирование и упаковка.</p>
+        </div>
+      </div>
+
+      <div class="video-card" onclick="openModal('hT_nvWreIhg')">
+        <div class="video-thumb">
+          <div class="play-btn">▶</div>
+          <div class="thumb-label">👷 Кадры</div>
+        </div>
+        <div class="video-card-body">
+          <h4>Карьера в ПАО «Органический синтез»</h4>
+          <p>Рабочие специальности, программы обучения и возможности карьерного роста на предприятии.</p>
+        </div>
+      </div>
+
+      <div class="video-card" onclick="openModal('60ItHLz5WEA')">
+        <div class="video-thumb">
+          <div class="play-btn">▶</div>
+          <div class="thumb-label">📊 Инвесторам</div>
+        </div>
+        <div class="video-card-body">
+          <h4>Инвестиционный профиль KZOS 2025</h4>
+          <p>Презентация для инвесторов: ключевые финансовые показатели, стратегия развития и дивидендная политика.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+
+<div class="video-frame-modal" id="videoModal" onclick="closeModalOutside(event)">
+  <div class="modal-inner">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-video">
+      <iframe id="modalIframe" src="" allow="autoplay; fullscreen" allowfullscreen></iframe>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>© 2026 ПАО «Органический синтез». Все права защищены.</div>
+    <div><a href="contacts.html">г. Казань, ул. Беломорская, 101</a></div>
+  </div>
+</footer>
+
+<button class="back-to-top" aria-label="Наверх">↑</button>
+<script src="menu.js"></script>
+<script>
+function openModal(id) {
+  document.getElementById('modalIframe').src = `https://www.youtube.com/embed/${id}?autoplay=1`;
+  document.getElementById('videoModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+  document.getElementById('modalIframe').src = '';
+  document.getElementById('videoModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function closeModalOutside(e) {
+  if (e.target === document.getElementById('videoModal')) closeModal();
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+</script>
+</body>
+</html>

@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Курс валют — ПАО «Органический синтез»</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .currency-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      margin-bottom: 36px;
+    }
+    @media(max-width:720px){ .currency-container { grid-template-columns: 1fr; } }
+
+    .rate-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      padding: 32px;
+    }
+    .rate-flag { font-size: 2.4rem; margin-bottom: 10px; }
+    .rate-name {
+      font-family: 'Exo 2', sans-serif;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .rate-value {
+      font-family: 'Exo 2', sans-serif;
+      font-size: 2.6rem;
+      font-weight: 800;
+      color: var(--primary);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .rate-value span { font-size: 1.2rem; font-weight: 600; color: var(--text-muted); }
+    .rate-nominal {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+    .rate-change {
+      margin-top: 12px;
+      font-family: 'Exo 2', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 700;
+    }
+    .rate-change.up { color: #1a9b3c; }
+    .rate-change.dn { color: #d9260f; }
+
+    .calculator-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      padding: 32px;
+    }
+    .calc-title {
+      font-family: 'Exo 2', sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--primary);
+      margin-bottom: 20px;
+    }
+    .calc-row {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 18px;
+    }
+    .calc-row label {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      font-family: 'Exo 2', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .calc-input-wrap {
+      display: flex;
+      align-items: center;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+    .calc-input-wrap:focus-within { border-color: var(--primary); }
+    .calc-currency-badge {
+      background: var(--primary);
+      color: #fff;
+      padding: 10px 14px;
+      font-family: 'Exo 2', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      white-space: nowrap;
+    }
+    .calc-input-wrap input {
+      flex: 1;
+      border: none;
+      outline: none;
+      padding: 10px 14px;
+      font-size: 1.05rem;
+      font-family: 'Exo 2', sans-serif;
+      font-weight: 600;
+      color: var(--text);
+      background: transparent;
+    }
+    .calc-arrow {
+      text-align: center;
+      font-size: 1.4rem;
+      color: var(--accent);
+      margin: 6px 0;
+    }
+    .calc-hint { font-size: 0.78rem; color: var(--text-muted); margin-top: 4px; }
+    .date-info {
+      background: rgba(26,61,107,0.06);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-top: 16px;
+    }
+
+    
+    .chart-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      padding: 32px;
+      margin-bottom: 32px;
+    }
+    .chart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .chart-header h3 { margin: 0; }
+    .chart-legend {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      font-family: 'Exo 2', sans-serif;
+    }
+    #chartCanvas { width: 100%; display: block; cursor: pointer; }
+
+    .chart-tooltip {
+      background: var(--primary);
+      color: #fff;
+      border-radius: 6px;
+      padding: 8px 12px;
+      font-size: 0.82rem;
+      font-family: 'Exo 2', sans-serif;
+      font-weight: 600;
+      position: fixed;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s;
+      z-index: 500;
+      white-space: nowrap;
+    }
+    .chart-tooltip.visible { opacity: 1; }
+
+    .loader {
+      text-align: center;
+      padding: 32px;
+      color: var(--text-muted);
+      font-family: 'Exo 2', sans-serif;
+    }
+    .loader .spin {
+      width: 36px;
+      height: 36px;
+      border: 3px solid var(--border);
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 12px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+
+
+<header class="top-bar">
+  <a href="index.html" class="logo-wrap">
+    <div class="logo-icon">ОС</div>
+    <div>
+      <div class="logo-text">Органический синтез</div>
+      <div class="logo-sub">Публичное акционерное общество</div>
+    </div>
+  </a>
+  <div class="spacer"></div>
+  <div class="ticker-badge">KZOS · МосБиржа</div>
+</header>
+
+<button class="hamburger-btn" onclick="toggleMenu()" aria-label="Открыть меню">
+  <span></span><span></span><span></span>
+</button>
+<div class="menu-overlay" onclick="toggleMenu()"></div>
+<aside class="side-menu">
+  <div class="side-menu-header"><div class="sm-logo">ОС</div><span>Навигация</span></div>
+  <nav>
+    <a href="index.html"><span class="nav-icon">🏭</span>О компании</a>
+    <a href="news.html"><span class="nav-icon">📰</span>Новости</a>
+    <a href="currency.html" class="active"><span class="nav-icon">💱</span>Курс валют</a>
+    <a href="contacts.html"><span class="nav-icon">📍</span>Контакты</a>
+    <a href="video.html"><span class="nav-icon">🎥</span>Видео</a>
+  </nav>
+  <div class="side-menu-footer">ПАО «Органический синтез» © 2026</div>
+</aside>
+
+<section class="hero" style="padding:40px 24px 36px">
+  <div class="page-wrapper">
+    <div class="hero-label">Финансы · ЦБ РФ</div>
+    <h1>Курс южноафриканского рэнда (ZAR)</h1>
+    <p>Актуальный курс ЦБ РФ, калькулятор конвертации и динамика за 30 дней.</p>
+  </div>
+</section>
+
+<main>
+  <div class="page-wrapper main-content">
+    <div class="breadcrumb">
+      <a href="index.html">Главная</a><span class="sep">›</span><span>Курс валют</span>
+    </div>
+
+    <div id="loadingIndicator" class="loader">
+      <div class="spin"></div>
+      Загружаем данные ЦБ РФ...
+    </div>
+
+    <div id="mainContent" style="display:none">
+
+      
+      <div class="currency-container">
+        <div class="rate-card">
+          <div class="rate-flag">🇿🇦</div>
+          <div class="rate-name">Южноафриканский рэнд</div>
+          <div class="rate-value" id="rateDisplay">— <span>руб.</span></div>
+          <div class="rate-nominal" id="nominalDisplay">за 1 ZAR</div>
+          <div class="date-info" id="dateDisplay">Дата курса: загрузка...</div>
+          <div class="rate-change" id="rateChange"></div>
+        </div>
+        <div class="calculator-card">
+          <div class="calc-title">💱 Конвертер валют</div>
+          <div class="calc-row">
+            <label>Российский рубль</label>
+            <div class="calc-input-wrap">
+              <div class="calc-currency-badge">RUB</div>
+              <input type="number" id="rubInput" placeholder="100" value="100" oninput="fromRub()">
+            </div>
+          </div>
+          <div class="calc-arrow">⇅</div>
+          <div class="calc-row">
+            <label>Южноафриканский рэнд</label>
+            <div class="calc-input-wrap">
+              <div class="calc-currency-badge">ZAR</div>
+              <input type="number" id="zarInput" placeholder="0" oninput="fromZar()">
+            </div>
+          </div>
+          <div class="calc-hint" id="calcHint">Введите сумму для конвертации</div>
+        </div>
+      </div>
+
+      
+      <div class="chart-card">
+        <div class="chart-header">
+          <h3>Динамика курса ZAR за последние 30 дней</h3>
+          <div class="chart-legend">Нажмите на столбец для просмотра деталей</div>
+        </div>
+        <div id="chartLoader" class="loader" style="padding:20px">
+          <div class="spin"></div>Загружаем историю...
+        </div>
+        <canvas id="chartCanvas" height="300" style="display:none"></canvas>
+      </div>
+
+    </div>
+
+    <div id="errorBlock" style="display:none" class="info-block">
+      <p style="color:#d9260f">⚠️ Не удалось загрузить данные ЦБ РФ. Проверьте подключение к интернету.</p>
+    </div>
+  </div>
+</main>
+
+<div class="chart-tooltip" id="tooltip"></div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>© 2026 ПАО «Органический синтез». Все права защищены.</div>
+    <div><a href="contacts.html">г. Казань, ул. Беломорская, 101</a></div>
+  </div>
+</footer>
+
+<button class="back-to-top" aria-label="Наверх">↑</button>
+<script src="menu.js"></script>
+<script>
+let zarRate = null; 
+let zarNominal = 1;
+let chartData = [];
+let selectedBar = -1;
+
+
+async function loadCurrentRate() {
+  try {
+    const res = await fetch('https://www.cbr-xml-daily.ru/daily_json.js');
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const data = await res.json();
+
+    const zar = data.Valute && data.Valute['ZAR'];
+    if (!zar) throw new Error('ZAR not found');
+
+    zarNominal = zar.Nominal;
+    zarRate = zar.Value / zar.Nominal;
+
+    document.getElementById('rateDisplay').innerHTML = zarRate.toFixed(4) + ' <span>руб.</span>';
+    document.getElementById('nominalDisplay').textContent = `за 1 ZAR (номинал: ${zarNominal})`;
+
+    const d = new Date(data.Date);
+    document.getElementById('dateDisplay').textContent = `Дата курса ЦБ РФ: ${d.toLocaleDateString('ru-RU', {day:'numeric',month:'long',year:'numeric'})}`;
+
+    const prev = zar.Previous / zar.Nominal;
+    const diff = zarRate - prev;
+    const pct = (diff / prev * 100).toFixed(2);
+    const changeEl = document.getElementById('rateChange');
+    if (diff >= 0) {
+      changeEl.className = 'rate-change up';
+      changeEl.textContent = `▲ +${diff.toFixed(4)} руб. (+${pct}%) к предыдущему`;
+    } else {
+      changeEl.className = 'rate-change dn';
+      changeEl.textContent = `▼ ${diff.toFixed(4)} руб. (${pct}%) к предыдущему`;
+    }
+
+    document.getElementById('loadingIndicator').style.display = 'none';
+    document.getElementById('mainContent').style.display = 'block';
+
+    
+    document.getElementById('rubInput').value = '100';
+    fromRub();
+
+    
+    loadHistory(data.Date);
+  } catch(e) {
+    document.getElementById('loadingIndicator').style.display = 'none';
+    document.getElementById('errorBlock').style.display = 'block';
+    console.error(e);
+  }
+}
+
+
+function getLast30Dates(tillDate) {
+  const dates = [];
+  const end = tillDate ? new Date(tillDate) : new Date();
+  let cur = new Date(end);
+  while (dates.length < 30) {
+    
+    if (cur.getDay() !== 0 && cur.getDay() !== 6) {
+      dates.unshift(new Date(cur));
+    }
+    cur.setDate(cur.getDate() - 1);
+  }
+  return dates;
+}
+
+function fmtDate(d) {
+  const y = d.getFullYear();
+  const m = String(d.getMonth()+1).padStart(2,'0');
+  const dd = String(d.getDate()).padStart(2,'0');
+  return `${y}/${m}/${dd}`;
+}
+
+function fmtLabel(d) {
+  return d.toLocaleDateString('ru-RU', {day:'2-digit', month:'2-digit'});
+}
+
+async function loadHistory(tillDate) {
+  const dates = getLast30Dates(tillDate);
+  chartData = [];
+
+  
+  const batchSize = 6;
+  for (let i = 0; i < dates.length; i += batchSize) {
+    const batch = dates.slice(i, i + batchSize);
+    const results = await Promise.all(batch.map(async (d) => {
+      try {
+        const url = `https://www.cbr-xml-daily.ru/archive/${fmtDate(d)}/daily_json.js`;
+        const res = await fetch(url);
+        if (!res.ok) return null;
+        const json = await res.json();
+        const zar = json.Valute && json.Valute['ZAR'];
+        if (!zar) return null;
+        return { date: d, label: fmtLabel(d), rate: zar.Value / zar.Nominal };
+      } catch { return null; }
+    }));
+    results.forEach(r => { if (r) chartData.push(r); });
+  }
+
+  document.getElementById('chartLoader').style.display = 'none';
+  if (chartData.length > 0) {
+    const canvas = document.getElementById('chartCanvas');
+    canvas.style.display = 'block';
+    drawChart(canvas);
+  }
+}
+
+function drawChart(canvas) {
+  const dpr = window.devicePixelRatio || 1;
+  const W = canvas.parentElement.clientWidth - 64;
+  canvas.width = W * dpr;
+  canvas.height = 300 * dpr;
+  canvas.style.width = W + 'px';
+  canvas.style.height = '300px';
+
+  const ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
+
+  const w = W, h = 300;
+  const padL = 60, padR = 20, padT = 20, padB = 50;
+  const chartW = w - padL - padR;
+  const chartH = h - padT - padB;
+
+  const rates = chartData.map(d => d.rate);
+  const minR = Math.min(...rates) * 0.98;
+  const maxR = Math.max(...rates) * 1.02;
+
+  const n = chartData.length;
+  const barW = Math.max(4, chartW / n - 2);
+  const gap = chartW / n;
+
+  
+  ctx.fillStyle = '#fff';
+  ctx.fillRect(0, 0, w, h);
+
+  
+  ctx.strokeStyle = '#e8eef5';
+  ctx.lineWidth = 1;
+  const steps = 5;
+  for (let i = 0; i <= steps; i++) {
+    const y = padT + chartH * (1 - i / steps);
+    ctx.beginPath();
+    ctx.moveTo(padL, y);
+    ctx.lineTo(w - padR, y);
+    ctx.stroke();
+    const val = minR + (maxR - minR) * (i / steps);
+    ctx.fillStyle = '#8a9bb0';
+    ctx.font = '11px "Exo 2", sans-serif';
+    ctx.textAlign = 'right';
+    ctx.fillText(val.toFixed(2), padL - 6, y + 4);
+  }
+
+  
+  chartData.forEach((item, i) => {
+    const x = padL + gap * i + (gap - barW) / 2;
+    const barH = chartH * (item.rate - minR) / (maxR - minR);
+    const y = padT + chartH - barH;
+
+    const isSelected = (i === selectedBar);
+    if (isSelected) {
+      ctx.fillStyle = '#e8960f';
+    } else {
+      
+      const grad = ctx.createLinearGradient(x, y, x, padT + chartH);
+      grad.addColorStop(0, '#2557a0');
+      grad.addColorStop(1, '#1a3d6b');
+      ctx.fillStyle = grad;
+    }
+
+    
+    const r = 3;
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.lineTo(x + barW - r, y);
+    ctx.quadraticCurveTo(x + barW, y, x + barW, y + r);
+    ctx.lineTo(x + barW, padT + chartH);
+    ctx.lineTo(x, padT + chartH);
+    ctx.lineTo(x, y + r);
+    ctx.quadraticCurveTo(x, y, x + r, y);
+    ctx.closePath();
+    ctx.fill();
+
+    
+    if (i % Math.ceil(n / 7) === 0 || i === n - 1) {
+      ctx.fillStyle = '#5a6a7e';
+      ctx.font = '10px "PT Sans", sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(item.label, x + barW / 2, h - 8);
+    }
+  });
+
+  
+  ctx.strokeStyle = '#c8d6e5';
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.moveTo(padL, padT);
+  ctx.lineTo(padL, padT + chartH);
+  ctx.lineTo(w - padR, padT + chartH);
+  ctx.stroke();
+
+  
+  canvas.onclick = function(e) {
+    const rect = canvas.getBoundingClientRect();
+    const mx = (e.clientX - rect.left);
+    const idx = Math.floor((mx - padL) / gap);
+    if (idx >= 0 && idx < chartData.length) {
+      selectedBar = (selectedBar === idx) ? -1 : idx;
+      drawChart(canvas);
+    }
+  };
+
+  
+  const tooltip = document.getElementById('tooltip');
+  canvas.onmousemove = function(e) {
+    const rect = canvas.getBoundingClientRect();
+    const mx = e.clientX - rect.left;
+    const idx = Math.floor((mx - padL) / gap);
+    if (idx >= 0 && idx < chartData.length) {
+      const item = chartData[idx];
+      tooltip.textContent = `${item.label}: ${item.rate.toFixed(4)} руб./ZAR`;
+      tooltip.style.left = (e.clientX + 12) + 'px';
+      tooltip.style.top = (e.clientY - 8) + 'px';
+      tooltip.classList.add('visible');
+    } else {
+      tooltip.classList.remove('visible');
+    }
+  };
+  canvas.onmouseleave = () => tooltip.classList.remove('visible');
+}
+
+
+function fromRub() {
+  if (!zarRate) return;
+  const rub = parseFloat(document.getElementById('rubInput').value) || 0;
+  const zar = rub / zarRate;
+  document.getElementById('zarInput').value = zar.toFixed(2);
+  document.getElementById('calcHint').textContent = `${rub.toFixed(2)} RUB = ${zar.toFixed(2)} ZAR (курс: ${zarRate.toFixed(4)} руб./ZAR)`;
+}
+function fromZar() {
+  if (!zarRate) return;
+  const zar = parseFloat(document.getElementById('zarInput').value) || 0;
+  const rub = zar * zarRate;
+  document.getElementById('rubInput').value = rub.toFixed(2);
+  document.getElementById('calcHint').textContent = `${zar.toFixed(2)} ZAR = ${rub.toFixed(2)} RUB (курс: ${zarRate.toFixed(4)} руб./ZAR)`;
+}
+
+loadCurrentRate();
+</script>
+</body>
+</html>
